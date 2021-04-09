@@ -13,6 +13,10 @@ namespace DataLayer.Views {
      * The issue is, since the class is defined in the data layer, and needs to be
      * used in the application layer, we'll have to create an interface in the application
      * layer that the BooksView then implements.
+     *
+     * Note that you'll have to manually write the SQL for the view.
+     * So, essentially, you'll create a migration, and write raw SQL in the up and
+     * down methods.
      */
     public class BooksView : ISimpleBook {
         public string Title { get; set; }
