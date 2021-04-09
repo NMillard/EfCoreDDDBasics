@@ -18,8 +18,8 @@ namespace Domain.GoodExamples {
         
         public Guid Id { get; }
         public string Name { get; private set; }
-
         public AuthorStatus Status { get; internal set; }
+        public Address MainAddress { get; private set; }
         
         /*
          * Never use public setters for collections.
@@ -39,6 +39,9 @@ namespace Domain.GoodExamples {
             
             return true;
         }
+
+        public void UpdateAddress(Address address) =>
+            MainAddress = address ?? throw new ArgumentException("Must have a value", nameof(address));
     }
 
     public enum AuthorStatus {

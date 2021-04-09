@@ -18,7 +18,9 @@ namespace DataLayer {
                 .Build();
             
             DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlServer(configs.GetConnectionString("sql"))
+                .UseSqlServer(configs.GetConnectionString("sql"), builder => {
+                    builder.MigrationsHistoryTable("_EFMigrationsHistory", "EfCore");
+                })
                 .Options;
 
             return new AppDbContext(options);

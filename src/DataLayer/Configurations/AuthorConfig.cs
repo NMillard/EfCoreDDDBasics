@@ -20,6 +20,16 @@ namespace DataLayer.Configurations {
                 .IsRequired()
                 .HasConversion<string>();
 
+            builder.OwnsOne<Address>(nameof(Author.MainAddress), addressBuilder => {
+                /*
+                 * Rename properties' columns because they'd otherwise be prefixed with 'Address_'
+                 */
+                addressBuilder.Property(a => a.Street).HasColumnName(nameof(Address.Street));
+                addressBuilder.Property(a => a.Zipcode).HasColumnName(nameof(Address.Zipcode));
+                addressBuilder.Property(a => a.HouseNumber).HasColumnName(nameof(Address.HouseNumber));
+                addressBuilder.Property(a => a.City).HasColumnName(nameof(Address.City));
+            });
+
             builder.Navigation(nameof(Author.Books))
                 .UsePropertyAccessMode(PropertyAccessMode.Field) // Convention based -> will find field named "books"
                 .AutoInclude(); // Automatically include this in any query

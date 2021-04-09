@@ -11,7 +11,9 @@ namespace DataLayer {
          */
         public static IServiceCollection AddAppContext(this IServiceCollection services, string connectionString) {
             services.AddDbContext<AppDbContext>(builder => {
-                builder.UseSqlServer(connectionString);
+                builder.UseSqlServer(connectionString, builder => {
+                    builder.MigrationsHistoryTable("_MigrationHistory", "EfCore");
+                });
             });
 
             /*
