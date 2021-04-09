@@ -13,5 +13,6 @@ namespace DataLayer.Repositories {
         }
 
         public async Task<IEnumerable<Author>> GetAllAsync() => await context.Authors.ToListAsync();
+        public async Task<IEnumerable<ISimpleBook>> GetBooksAsync() => await context.SimpleBooks.ToListAsync();
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Application;
+using Application.Interfaces.Repositories;
+using Application.Queries;
 using DataLayer;
 using Domain.GoodExamples;
 using Microsoft.Extensions.Configuration;
@@ -32,11 +34,14 @@ ServiceProvider provider = container.BuildServiceProvider();
 
 var context = provider.GetRequiredService<IAppContext>();
 var authorQuery = provider.GetRequiredService<IGetAuthorsQuery>();
+var booksQuery = provider.GetRequiredService<IGetSimpleBooksQuery>();
 
 bool result = await context.CanConnectAsync();
 if (!result) throw new InvalidOperationException();
 
 IEnumerable<Author> authors = await authorQuery.ExecuteAsync();
 foreach (Author author in authors) Console.WriteLine($"{author.Name} has {author.Books.Count.ToString()} books");
+
+IEnumerable<ISimpleBook> simpleBooks = await booksQuery.ExecuteAsync(); 
 
 Console.WriteLine("Application exiting...");

@@ -13,7 +13,7 @@
         }
         
         public string Title { get; }
-
         public BookType BookType { get; }
+        public string Genre => BookType.Genre;
     }
 }

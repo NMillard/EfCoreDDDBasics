@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.Interfaces.Repositories;
 using Domain.GoodExamples;
 
-namespace Application {
+namespace Application.Queries {
 
     public interface IGetAuthorsQuery {
         Task<IEnumerable<Author>> ExecuteAsync();

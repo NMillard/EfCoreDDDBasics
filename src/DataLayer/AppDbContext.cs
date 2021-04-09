@@ -1,10 +1,15 @@
 ﻿using System.Threading.Tasks;
+using DataLayer.Views;
 using Domain.BadExamples;
 using Domain.GoodExamples;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer {
     public interface IAppContext {
+        /*
+         * Verify that we can connect to the database.
+         * Great for health checks.
+         */
         Task<bool> CanConnectAsync();
     }
     
@@ -27,6 +32,7 @@ namespace DataLayer {
         public DbSet<BadBook> BadBooks { get; set; }
 
         public DbSet<Author> Authors { get; set; }
+        public DbSet<BooksView> SimpleBooks { get; set; }
         
         public async Task<bool> CanConnectAsync() => await Database.CanConnectAsync();
 

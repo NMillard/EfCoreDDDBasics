@@ -40,6 +40,8 @@ namespace DataLayer.Configurations {
                     .HasMaxLength(150)
                     .IsRequired();
 
+                bookBuilder.Ignore(b => b.Genre);
+
                 bookBuilder.Property(b => b.BookType)
                     .IsRequired()
                     .HasConversion( // You can even convert a value into an object

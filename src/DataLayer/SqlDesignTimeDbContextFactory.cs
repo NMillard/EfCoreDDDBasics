@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
@@ -14,7 +13,6 @@ namespace DataLayer {
     internal class SqlDesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext> {
         public AppDbContext CreateDbContext(string[] args) {
             IConfigurationRoot configs = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddEnvironmentVariables()
                 .AddUserSecrets(typeof(SqlDesignTimeDbContextFactory).Assembly)
                 .Build();
