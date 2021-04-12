@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Application;
 using Application.Interfaces.Repositories;
 using Application.Queries;
@@ -40,8 +41,21 @@ bool result = await context.CanConnectAsync();
 if (!result) throw new InvalidOperationException();
 
 IEnumerable<Author> authors = await authorQuery.ExecuteAsync();
-foreach (Author author in authors) Console.WriteLine($"{author.Name} has {author.Books.Count.ToString()} books");
+foreach (Author author in authors) {
+    Console.WriteLine($"{author.Name} has {author.Books.Count.ToString()} books");
+}
 
-IEnumerable<ISimpleBook> simpleBooks = await booksQuery.ExecuteAsync(); 
+// Just illustrating you can add a book to an author, and by updating the author, the book is also saved. 
+var repo = provider.GetRequiredService<IAuthorRepository>();
+if (authors.Any()) {
+    Guid id = authors.First().Id;
+    Author author = await repo.GetAuthorAsync(id);
+    author.AddBook(new Book("C# and stuff", new BookType("Adventure")));
+
+    await repo.UpdateAuthorAsync(author);
+}
+
+
+IEnumerable<ISimpleBook> simpleBooks = await booksQuery.ExecuteAsync();
 
 Console.WriteLine("Application exiting...");

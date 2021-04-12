@@ -241,6 +241,17 @@ public class AuthorConfig : IEntityTypeConfiguration<Author> {
         });
     }
 }
+
+public class BookTypeConfig : IEntityTypeConfiguration<BookType> {
+    public void Configure(EntityTypeBuilder<BookType> builder) {
+        builder.ToTable("BookTypes");   
+        builder.HasKey("id");
+        builder.Property(bt => bt.Genre)
+            .IsRequired()
+            .HasMaxLength(100)
+            .HasDefaultValue("Unspecified");
+    }
+}
 ```
 
 ## Should I use DbContext directly in service/controller classes?

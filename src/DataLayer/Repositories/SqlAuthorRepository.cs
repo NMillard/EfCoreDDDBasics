@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces.Repositories;
@@ -35,6 +37,18 @@ namespace DataLayer.Repositories {
             .AsQueryable();
 
         public async Task<IEnumerable<Author>> GetAllAsync() => await Authors.ToListAsync();
+        public async Task<Author> GetAuthorAsync(Guid byId) => await Authors.SingleOrDefaultAsync(a => a.Id == byId);
+
         public async Task<IEnumerable<ISimpleBook>> GetBooksAsync() => await context.SimpleBooks.ToListAsync();
+        public async Task<bool> UpdateAuthorAsync(Author author) {
+            context.Authors.Update(author);
+            try {
+                await context.SaveChangesAsync();
+                return true;
+            } catch (DbException) {
+                // some logging and erro handling
+                return false;
+            }
+        }
     }
 }
