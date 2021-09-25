@@ -14,7 +14,7 @@ variables:
   dataLayerLocation: 'src/DataLayer/DataLayer.csproj'
 
 jobs:
-- job: intall
+- job: install
   displayName: 'Install dotnet apps'
   steps:
   - task: DotNetCoreCLI@2
