@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  dataLayerLocation: 'src/DataLayer/DataLayer.csproj'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -37,7 +38,7 @@ steps:
   inputs: 
     command: custom
     custom: 'user-secrets'
-    arguments: "set ConnectionStrings:sql '$(ConnectionStrings:sql)'"
+    arguments: "set ConnectionStrings:sql '$(ConnectionStrings:sql)' -p $(dataLayerLocation)"
 
 - task: DotNetCoreCLI@2
   displayName: 'Build solution'
@@ -51,7 +52,7 @@ steps:
   inputs:
     command: custom
     custom: ef
-    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/sql -p src/DataLayer/DataLayer.csproj'
+    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/sql -p $(dataLayerLocation)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish dotnet'
