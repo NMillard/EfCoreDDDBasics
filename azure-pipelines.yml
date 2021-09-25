@@ -21,9 +21,23 @@ steps:
     arguments: 'install dotnet-ef -g'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Install user-secrets'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install dotnet-user-secrets -g'
+
+- task: DotNetCoreCLI@2
   displayName: 'Restore packages'
   inputs: 
     command: restore
+
+- task: DotNetCoreCLI@2
+  displayName: 'Set connection string'
+  inputs: 
+    command: custom
+    custom: 'user-secrets'
+    arguments: "set ConnectionStrings:sql '$(ConnectionStrings:sql)'"
 
 - task: DotNetCoreCLI@2
   displayName: 'Build solution'
