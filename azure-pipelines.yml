@@ -30,4 +30,19 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '-c $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish dotnet'
+  inputs:
+    command: publish
+    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+    includesymbols: true
+    includesource: true
+    
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact to drop'
+  inputs:
+    artifactName: 'solution'
+
