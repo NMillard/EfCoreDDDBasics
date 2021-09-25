@@ -25,8 +25,8 @@ namespace Domain.BadExamples {
         [MaxLength(50)]
         public string Title { get; set; }
 
-        [DataType("DateTime2")]
         [Required]
+        [DataType("DateTime2")]
         public DateTime Released { get; set; }
         
         public BadAuthor Author { get; set; }

@@ -7,10 +7,16 @@ namespace Domain.BadExamples {
     [Table("BadAuthors")]
     public class BadAuthor {
 
-        public BadAuthor() {
-            Books = new List<BadBook>(); // Always be a good citizen and instantiate collections
+        private BadAuthor() {
+            // Make EF core happy
         }
         
+        public BadAuthor(string name) {
+            Name = name;
+            Books = new List<BadBook>();
+        }
+        
+        [Key]
         public Guid Id { get; set; }
 
         [Required]

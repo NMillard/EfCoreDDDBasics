@@ -13,8 +13,8 @@ namespace DataLayer {
     internal class SqlDesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext> {
         public AppDbContext CreateDbContext(string[] args) {
             IConfigurationRoot configs = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
                 .AddUserSecrets(typeof(SqlDesignTimeDbContextFactory).Assembly)
+                .AddEnvironmentVariables()
                 .Build();
             
             DbContextOptions options = new DbContextOptionsBuilder()

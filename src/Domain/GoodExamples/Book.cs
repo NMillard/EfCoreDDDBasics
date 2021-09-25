@@ -1,4 +1,6 @@
-﻿namespace Domain.GoodExamples {
+﻿using System;
+
+namespace Domain.GoodExamples {
     /*
      * For illustrative purposes, think of this book class as an owned type.
      * It cannot exist on its own. It will always need a parent, in this case, an Author.
@@ -7,7 +9,9 @@
      * the Author's read only collection property "Books".
      */
     public class Book {
+        
         public Book(string title, BookType bookType) {
+            if (string.IsNullOrEmpty(title)) throw new ArgumentNullException(nameof(title));
             Title = title;
             BookType = bookType;
         }
