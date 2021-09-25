@@ -13,65 +13,74 @@ variables:
   buildConfiguration: 'Release'
   dataLayerLocation: 'src/DataLayer/DataLayer.csproj'
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Install EF Core tools'
-  inputs:
-    command: custom
-    custom: tool
-    arguments: 'install dotnet-ef -g'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Install user-secrets'
-  inputs:
-    command: custom
-    custom: tool
-    arguments: 'install dotnet-user-secrets -g'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Restore packages'
-  inputs: 
-    command: restore
-
-- task: DotNetCoreCLI@2
-  displayName: 'Set connection string'
-  inputs: 
-    command: custom
-    custom: 'user-secrets'
-    arguments: "set ConnectionStrings:sql '$(ConnectionStrings:sql)' -p $(dataLayerLocation)"
-
-- task: DotNetCoreCLI@2
+jobs: 
+- job: intall
+  displayName: 'Install dotnet apps'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Install EF Core tools'
+    inputs:
+     command: custom
+     custom: tool
+     arguments: 'install dotnet-ef -g'
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Install user-secrets'
+    inputs:
+     command: custom
+     custom: tool
+     arguments: 'install dotnet-user-secrets -g'
+     
+- job: build
   displayName: 'Build solution'
-  inputs:
-    command: build
-    projects: '**/*.csproj'
-    arguments: '-c $(buildConfiguration)'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore packages'
+    inputs: 
+      command: restore
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Set connection string'
+    inputs: 
+      command: custom
+      custom: 'user-secrets'
+      arguments: "set ConnectionStrings:sql '$(ConnectionStrings:sql)' -p $(dataLayerLocation)"
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Build solution'
+    inputs:
+      command: build
+      projects: '**/*.csproj'
+      arguments: '-c $(buildConfiguration)'
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Generate SQL migration script'
+    inputs:
+      command: custom
+      custom: ef
+      arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/db.sql -p $(dataLayerLocation)'
+  
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish dotnet'
+    inputs:
+      command: publish
+      arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/app'
+      publishWebProjects: false
+      zipAfterPublish: true
+      includesymbols: true
+      includesource: true
 
-- task: DotNetCoreCLI@2
-  displayName: 'Generate SQL migration script'
-  inputs:
-    command: custom
-    custom: ef
-    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/db.sql -p $(dataLayerLocation)'
+- job: publish
+  displayName: 'Publish artifacts'
+  steps:
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifact to drop'
+    inputs:
+      artifactName: 'solution'
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/app
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish dotnet'
-  inputs:
-    command: publish
-    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/app'
-    publishWebProjects: false
-    zipAfterPublish: true
-    includesymbols: true
-    includesource: true
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish artifact to drop'
-  inputs:
-    artifactName: 'solution'
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/app
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish SQL migration to drop'
-  inputs:
-    artifactName: 'sql'
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/db.sql
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish SQL migration to drop'
+    inputs:
+      artifactName: 'sql'
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/db.sql
