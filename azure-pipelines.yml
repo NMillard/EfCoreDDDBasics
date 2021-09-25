@@ -52,7 +52,7 @@ steps:
   inputs:
     command: custom
     custom: ef
-    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/sql -p $(dataLayerLocation)'
+    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/db.sql -p $(dataLayerLocation)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish dotnet'
@@ -71,7 +71,7 @@ steps:
     PathtoPublish: $(Build.ArtifactStagingDirectory)/app
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish artifact to drop'
+  displayName: 'Publish SQL migration to drop'
   inputs:
     artifactName: 'sql'
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/sql
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/db.sql
