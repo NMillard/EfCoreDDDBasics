@@ -33,18 +33,30 @@ steps:
     arguments: '-c $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Generate SQL migration script'
+  inputs:
+    command: custom
+    custom: ef
+    arguments: 'migrations script -i -v -o $(Build.ArtifactStagingDirectory)/sql -p src/DataLayer/DataLayer.csproj'
+
+- task: DotNetCoreCLI@2
   displayName: 'Publish dotnet'
   inputs:
     command: publish
-    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/app'
     publishWebProjects: false
     zipAfterPublish: true
     includesymbols: true
     includesource: true
-    
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact to drop'
   inputs:
     artifactName: 'solution'
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/app
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact to drop'
+  inputs:
+    artifactName: 'solution'
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/app
