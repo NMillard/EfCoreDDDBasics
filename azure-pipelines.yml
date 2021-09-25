@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
   dataLayerLocation: 'src/DataLayer/DataLayer.csproj'
 
-jobs: 
+jobs:
 - job: intall
   displayName: 'Install dotnet apps'
   steps:
@@ -32,6 +32,7 @@ jobs:
      arguments: 'install dotnet-user-secrets -g'
      
 - job: build
+  dependsOn: install
   displayName: 'Build solution'
   steps:
   - task: DotNetCoreCLI@2
@@ -71,6 +72,7 @@ jobs:
       includesource: true
 
 - job: publish
+  dependsOn: build
   displayName: 'Publish artifacts'
   steps:
   - task: PublishBuildArtifacts@1
