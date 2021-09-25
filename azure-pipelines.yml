@@ -37,6 +37,8 @@ steps:
   inputs:
     command: publish
     arguments: '-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+    publishWebProjects: false
+    zipAfterPublish: true
     includesymbols: true
     includesource: true
     
