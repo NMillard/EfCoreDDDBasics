@@ -73,5 +73,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact to drop'
   inputs:
-    artifactName: 'solution'
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/app
+    artifactName: 'sql'
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/sql
