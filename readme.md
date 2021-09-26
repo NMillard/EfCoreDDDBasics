@@ -157,7 +157,7 @@ internal class AppDbContext : DbContext, IAppContext {
 }
 ```
 
-They only thing that might make you scratch your head is the `ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly)`. But, don't worry, it's quite simple.
+The only thing that might make you scratch your head is the `ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly)`. But, don't worry, it's quite simple.
 
 All it's doing is to search the provided assembly for any class implementing `IEntityTypeConfiguration<T>`, and configure the models using that class. That's it.
 
@@ -190,7 +190,7 @@ public static class ServiceInjector {
 ```
 
 ## Configuring the domain models in EF Core
-Again, this is a wall of code. But, I'll show excatly how you can configure EF Core to use domain models that don't have any infrastructure concerns baked into them.
+Again, this is a wall of code. But, I'll show exactly how you can configure EF Core to use domain models that don't have any infrastructure concerns baked into them.
 
 ```csharp
 public class AuthorConfig : IEntityTypeConfiguration<Author> {

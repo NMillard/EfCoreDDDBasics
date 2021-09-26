@@ -6,6 +6,8 @@ namespace Domain.Tests {
         [Fact]
         public void CreateNewInvalidBook() {
             var book = new BadBook();
+            
+            Assert.NotNull(book);
         }
     }
 }

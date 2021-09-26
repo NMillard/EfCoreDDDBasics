@@ -14,6 +14,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer.Tests", "test\DataLayer.Tests\DataLayer.Tests.csproj", "{0B5CA9EA-2F29-4AA7-8C60-50D86FC6E4DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0FE879F4-7865-428D-8779-ED68C6675475}"
+ProjectSection(SolutionItems) = preProject
+	.runsettings = .runsettings
+	azure-pipelines.yml = azure-pipelines.yml
+	readme.md = readme.md
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
