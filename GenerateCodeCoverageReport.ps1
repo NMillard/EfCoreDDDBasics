@@ -4,8 +4,19 @@
 Run the reportgenerator tool to combine and generate a code coverage report
 #>
 
-Set-Variable -Name ReportPath -Value ./CodeCoverage/Report
+param (
+    # Path to test results xml file
+    [Parameter(Mandatory, Position=0)]
+    [string]
+    $TestFilePath,
 
-if(Test-Path $ReportPath) { Remove-Item $ReportPath -Recurse }
+    # Path to result folder
+    [Parameter(Mandatory, Position=1)]
+    [String]
+    $ResultFilePath
+)
+
+
+if(Test-Path $ResultFilePath) { Remove-Item $ResultFilePath -Recurse }
 Write-Output "Executing from path $PWD"
-reportgenerator -reports:./**/*cobertura.xml -targetdir:$ReportPath -reporttypes:HtmlInline_AzurePipelines
+reportgenerator -reports:$TestFilePath -targetdir:$ResultFilePath -reporttypes:HtmlInline_AzurePipelines

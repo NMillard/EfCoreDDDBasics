@@ -59,7 +59,7 @@ steps:
 - task: PowerShell@2
   displayName: 'Generate code coverage report'
   inputs:
-    filePath: $(System.DefaultWorkingDirectory)/GenerateCodeCoverageReport.ps1
+    filePath: $(System.DefaultWorkingDirectory)/GenerateCodeCoverageReport.ps1 -TestFilePath $(Agent.TempDirectory)/**/*cobertura.xml -ResultFilePath $(Agent.TempDirectory)/Result
 
 - task: DotNetCoreCLI@2
   displayName: 'Generate SQL migration script'
