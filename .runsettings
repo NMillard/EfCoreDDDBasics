@@ -3,4 +3,21 @@
     <RunConfiguration>
         <ResultsDirectory>./CodeCoverage</ResultsDirectory>
     </RunConfiguration>
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <DataCollector friendlyName="XPlat code coverage">
+                <Configuration>
+                    <Format>cobertura</Format>
+                    <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*</Exclude>
+                    <Include>[coverlet.*]*,[*]Coverlet.Core*</Include>
+                    <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute,ExcludeFromCodeCoverage</ExcludeByAttribute>
+<!--                    <ExcludeByFile></ExcludeByFile>-->
+<!--                    <IncludeDirectory></IncludeDirectory>-->
+                    <SingleHit>false</SingleHit>
+                    <UseSourceLink>true</UseSourceLink>
+                    <IncludeTestAssembly>true</IncludeTestAssembly>
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
 </RunSettings>
