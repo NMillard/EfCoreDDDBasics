@@ -19,6 +19,7 @@ ProjectSection(SolutionItems) = preProject
 	.runsettings = .runsettings
 	azure-pipelines.yml = azure-pipelines.yml
 	readme.md = readme.md
+	GenerateCodeCoverageReport.ps1 = GenerateCodeCoverageReport.ps1
 EndProjectSection
 EndProject
 Global

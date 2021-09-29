@@ -22,6 +22,13 @@ steps:
    command: custom
    custom: tool
    arguments: 'install dotnet-user-secrets -g'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install report generator tool'
+  inputs:
+   command: custom
+   custom: tool
+   arguments: 'install dotnet-reportgenerator-globaltool -g'
    
 - task: DotNetCoreCLI@2
   displayName: 'Restore packages'
@@ -48,6 +55,11 @@ steps:
     command: test
     projects: 'test/**/*.csproj'
     arguments: '-c $(buildConfiguration) --no-build --collect "XPlat  Code Coverage" --settings ".runsettings"'
+
+- task: PowerShell@2
+  displayName: 'Combine reports and generate output'
+  inputs:
+    script: ./GenerateCodeCoverageReport
 
 - task: DotNetCoreCLI@2
   displayName: 'Generate SQL migration script'
