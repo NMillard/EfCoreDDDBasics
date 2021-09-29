@@ -56,11 +56,12 @@ steps:
     projects: 'test/**/*.csproj'
     arguments: '-c $(buildConfiguration) --no-build --settings ".runsettings"'
 
-- task: PowerShell@2
-  displayName: 'Generate code coverage report'
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage results'
   inputs:
-    filePath: $(System.DefaultWorkingDirectory)/GenerateCodeCoverageReport.ps1
-    arguments: -TestFilePath $(Agent.TempDirectory)/**/*cobertura.xml -ResultFilePath $(Agent.TempDirectory)/Result
+    codeCoverageTool: Cobertura
+    reportDirectory: $(Agent.TempDirectory)/Result
+    summaryFileLocation: $(Agent.TempDirectory)/**/*cobertura.xml
 
 - task: DotNetCoreCLI@2
   displayName: 'Generate SQL migration script'
