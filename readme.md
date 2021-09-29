@@ -1,4 +1,10 @@
-# Basic EF Core with DDD approach
+# Basic EF Core with DDD approach 
+I assume most developers interact with their database thru an object-relational mapping technology. You rarely write raw SQL as an application developer these days.  
+This brings along a whole new set of issues.  
+
+Mixing concerns often lead to bad things in software development. But, I've found that marrying your domain model with your persistence logic one of the worst types of mixed concerns.  
+
+Not only do you need unnecessary library dependencies in your domain project, you all of a sudden also tell your domain __how__ data is stored.
 
 You can easily use EntityFramework Core with a domain driven approach.
 Newer versions of EF Core are awesome and plays nicely with proper domain models. Typically, many .NET developers think they have to cater for EF Core and compromise their domain models to make life easier with EF Core. This is absolutely not the case.
@@ -50,9 +56,9 @@ What's worse is the public setters. You're effectively allowing invalid states. 
 ## Making domain models persistence ignorant requires more code.
 I get why you'd want to write some quick and dirty code. It's easy. It's fast. It might even be okay. From a pragmatic stance, it sometimes make sense to mix concerns, occasionally. Like, if you're writing a PoC, or something short-lived (we know nothing is short-lived though, it's a lie).
 
-This is not one of those articles that'll take a pragmatic approach. I want to examplify how you can properly weed out infrastructure concerns from your domain models, even in combination with EF Core.
+This is not one of those articles that'll take a pragmatic approach. I want to exemplify how you can properly weed out infrastructure concerns from your domain models, even in combination with EF Core.
 
-As a constrast to the BadAuthor shown before, a more DDD aligned Author class is demonstrated below. This is obviously a contrived example, but does however demonstrate important aspects and principles, such as not exposing the collection of books, only having private or internal setters, and the use of a value object, that is, the `Address`.
+As a contrast to the BadAuthor shown before, a more DDD aligned Author class is demonstrated below. This is obviously a contrived example, but does however demonstrate important aspects and principles, such as not exposing the collection of books, only having private or internal setters, and the use of a value object, that is, the `Address`.
 
 Lots of code, but nothing out of the ordinary. There's not any crazy going on. But do spend a few seconds glaring over the code.
 

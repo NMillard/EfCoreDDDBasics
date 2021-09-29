@@ -40,7 +40,14 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '-c $(buildConfiguration)'
+    arguments: '-c $(buildConfiguration) --no-restore'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Run tests'
+  inputs:
+    command: test
+    projects: 'test/**/*.csproj'
+    arguments: '-c $(buildConfiguration) --no-build --collect "XPlat  Code Coverage" --settings ".runsettings"'
 
 - task: DotNetCoreCLI@2
   displayName: 'Generate SQL migration script'
