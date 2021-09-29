@@ -54,7 +54,7 @@ steps:
   inputs:
     command: test
     projects: 'test/**/*.csproj'
-    arguments: '-c $(buildConfiguration) --no-build --collect "XPlat  Code Coverage" --settings ".runsettings"'
+    arguments: '-c $(buildConfiguration) --no-build --collect:"XPlat  Code Coverage" --settings:".runsettings"'
 
 - task: PowerShell@2
   displayName: 'Combine reports and generate output'
