@@ -54,12 +54,11 @@ steps:
   inputs:
     command: test
     projects: 'test/**/*.csproj'
-    arguments: '-c $(buildConfiguration) --no-build --collect:"XPlat  Code Coverage" --settings:".runsettings"'
+    arguments: '-c $(buildConfiguration) --no-build --collect "XPlat  Code Coverage" --settings ".runsettings"'
 
-- task: PowerShell@2
-  displayName: 'Combine reports and generate output'
-  inputs:
-    script: ./GenerateCodeCoverageReport
+- powershell: 
+  displayName: 'Generate code coverage report'
+  target: GenerateCodeCoverageReport.ps1
 
 - task: DotNetCoreCLI@2
   displayName: 'Generate SQL migration script'
