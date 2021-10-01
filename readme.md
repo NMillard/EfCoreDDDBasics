@@ -1,3 +1,5 @@
+[![Build Status](https://nmillard.visualstudio.com/Learnings/_apis/build/status/NMillard.EfCoreDDDBasics?branchName=master)](https://nmillard.visualstudio.com/Learnings/_build/latest?definitionId=3&branchName=master)
+
 # Basic EF Core with DDD approach 
 I assume most developers interact with their database thru an object-relational mapping technology. You rarely write raw SQL as an application developer these days.  
 This brings along a whole new set of issues.  
